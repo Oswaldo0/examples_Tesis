@@ -27,7 +27,7 @@ const Header = ({ setCurrentPage }) => {
           alt="Logo Universidad Sonsonate"
           className="brand-logo"
         />
-        <h1>Universidad de Sonsonate</h1>
+        <h1>Sonsonate</h1>
       </div>
       <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         ☰

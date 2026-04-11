@@ -6,6 +6,7 @@ import Students from "./pages/Students";
 import Professors from "./pages/Professors";
 import Reports from "./pages/Reports";
 import Requests from "./pages/Requests";
+import Maintenance from "./pages/Maintenance";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -15,13 +16,15 @@ function App() {
       case "home":
         return <Home />;
       case "students":
-        return <Students />;
+        return <Students setCurrentPage={setCurrentPage} />;
       case "professors":
         return <Professors />;
       case "reports":
         return <Reports />;
       case "requests":
         return <Requests />;
+      case "maintenance":
+        return <Maintenance setCurrentPage={setCurrentPage} />;
       default:
         return <Home />;
     }

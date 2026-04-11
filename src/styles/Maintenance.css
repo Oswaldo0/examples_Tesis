@@ -1,0 +1,70 @@
+.maintenance-container {
+  padding: 30px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.maintenance-container h2 {
+  color: #1e5a96;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.maintenance-container p {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+.maintenance-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.maintenance-button {
+  padding: 15px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.maintenance-button.add {
+  background-color: #28a745;
+  color: white;
+}
+
+.maintenance-button.add:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.maintenance-button.update {
+  background-color: #007bff;
+  color: white;
+}
+
+.maintenance-button.update:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.maintenance-button.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.maintenance-button.reactivate {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.maintenance-button.reactivate:hover {
+  background-color: #e0a800;
+  transform: translateY(-2px);
+}

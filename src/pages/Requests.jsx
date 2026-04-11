@@ -8,11 +8,11 @@ const Requests = () => {
 
   return (
     <div className="requests-container">
-      <h2>Página de Solicitudes</h2>
-      <p>Aquí se mostrarán las solicitudes.</p>
-      <button className="print-button" onClick={handlePrintPDF}>
-        📄 Imprimir / Descargar PDF
-      </button>
+      <div className="requests-header">
+        <button className="print-button" onClick={handlePrintPDF}>
+          📄 Imprimir / Descargar PDF
+        </button>
+      </div>
     </div>
   );
 };
