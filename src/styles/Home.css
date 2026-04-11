@@ -47,6 +47,80 @@
   animation: fadeIn 0.3s ease;
 }
 
+.horario-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  justify-content: center;
+}
+
+.filter-panel {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid black;
+  margin-left: 0;
+}
+
+.schedule-content {
+  max-width: 840px;
+  width: 100%;
+}
+
+.filter-panel h3 {
+  margin-top: 0;
+  color: #1e5a96;
+  margin-bottom: 18px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.filter-group label {
+  color: #334155;
+  font-weight: 600;
+}
+
+.filter-group select,
+.filter-group input {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: #f8fafc;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+  border-color: #1e5a96;
+  box-shadow: 0 0 0 4px rgba(30, 90, 150, 0.12);
+}
+
+.filter-button {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #1e5a96;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-button:hover {
+  background-color: #154b7c;
+  transform: translateY(-1px);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -217,6 +291,14 @@
   }
 
   .tab-button {
+    width: 100%;
+  }
+
+  .horario-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-panel {
     width: 100%;
   }
 

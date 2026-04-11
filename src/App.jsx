@@ -8,25 +8,12 @@ import Reports from "./pages/Reports";
 import Requests from "./pages/Requests";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("home");
 
   const renderPage = () => {
     switch (currentPage) {
       case "home":
-        return (
-          <>
-            <Home />
-            <div className="card">
-              <button onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </button>
-              <p>
-                Edit <code>src/App.jsx</code> and save to test HMR
-              </p>
-            </div>
-          </>
-        );
+        return <Home />;
       case "students":
         return <Students />;
       case "professors":
