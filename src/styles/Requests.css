@@ -1,0 +1,62 @@
+.requests-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.requests-container h2 {
+  color: #282c34;
+  margin-bottom: 15px;
+}
+
+.requests-container p {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1rem;
+}
+
+.print-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.print-button:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.5);
+  transform: translateY(-2px);
+}
+
+.print-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .requests-container {
+    padding: 15px;
+  }
+
+  .print-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 0.95rem;
+  }
+}
+
+@media print {
+  .print-button {
+    display: none;
+  }
+  
+  .requests-container {
+    padding: 0;
+    max-width: 100%;
+  }
+}

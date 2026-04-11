@@ -1,0 +1,236 @@
+.home-container {
+  padding: 30px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.home-container h2 {
+  color: #1e5a96;
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-button {
+  background-color: #f0f4f8;
+  color: #1e5a96;
+  border: 2px solid #1e5a96;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: #e0ecf6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(30, 90, 150, 0.2);
+}
+
+.tab-button.active {
+  background-color: #1e5a96;
+  color: white;
+  box-shadow: 0 4px 12px rgba(30, 90, 150, 0.4);
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-content h3 {
+  color: #1e5a96;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+/* Tabla de Horarios */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-table thead {
+  background-color: #1e5a96;
+  color: white;
+}
+
+.schedule-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.schedule-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.schedule-table tbody tr:hover {
+  background-color: #f0f4f8;
+}
+
+.schedule-table td.break {
+  text-align: center;
+  background-color: #e0ecf6;
+  font-style: italic;
+  color: #666;
+}
+
+/* Grupos */
+.groups-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.group-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #1e5a96;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.group-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(30, 90, 150, 0.2);
+}
+
+.group-card h4 {
+  color: #1e5a96;
+  margin-bottom: 12px;
+}
+
+.group-card p {
+  margin: 8px 0;
+  color: #555;
+}
+
+/* Materias */
+.subjects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.subject-card {
+  background: linear-gradient(135deg, #1e5a96 0%, #2d7db5 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(30, 90, 150, 0.2);
+  transition: all 0.3s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(30, 90, 150, 0.3);
+}
+
+.subject-card h4 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.subject-card p {
+  margin: 8px 0;
+  opacity: 0.95;
+}
+
+/* Calendario */
+.calendar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calendar-event {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  border-left: 4px solid #1e5a96;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.calendar-event:hover {
+  background-color: #f0f4f8;
+  transform: translateX(5px);
+}
+
+.event-date {
+  display: inline-block;
+  background-color: #1e5a96;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  min-width: 120px;
+  text-align: center;
+}
+
+.event-title {
+  color: #555;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 20px 10px;
+  }
+
+  .home-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .tabs-container {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 100%;
+  }
+
+  .groups-list,
+  .subjects-list {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-table {
+    font-size: 0.85rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    padding: 10px 5px;
+  }
+}
