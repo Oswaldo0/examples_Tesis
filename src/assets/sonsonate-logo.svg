@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" fill="none">
+  <rect width="240" height="80" rx="16" fill="#1f2937" />
+  <circle cx="50" cy="40" r="20" fill="#f59e0b" />
+  <path d="M40 40 C40 25, 60 25, 60 40 C60 55, 40 55, 40 40 Z" fill="#1f2937" />
+  <path d="M44 38 L56 38 M50 28 L50 52" stroke="#1f2937" stroke-width="4" stroke-linecap="round" />
+  <text x="86" y="48" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700" font-size="28">UES</text>
+  <text x="86" y="68" fill="#a5b4fc" font-family="Arial, sans-serif" font-weight="500" font-size="14">Sonsonate</text>
+</svg>
