@@ -1,20 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Home.css';
-import { materiasApi, facultadesApi, carrerasApi, ciclosApi } from '../services/api';
+import {
+  materiasApi,
+  facultadesApi,
+  carrerasApi,
+  ciclosApi,
+  gruposApi,
+  planesEstudioApi,
+  studentsApi,
+} from '../services/api';
+
+const getCatalogLabel = (item, fallback = 'Sin nombre') => {
+  if (!item || typeof item !== 'object') return fallback;
+  return (
+    item.nombre ||
+    item.grupo ||
+    item.descripcion ||
+    item.codigo ||
+    (item.ciclo && item.anio ? `${item.ciclo} ${item.anio}` : null) ||
+    item.id ||
+    fallback
+  );
+};
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('horario');
   const [filters, setFilters] = useState({
-    group: 'Grupo A',
+    group: '',
     student: '',
-    year: '1er Año',
+    year: '',
     career: '',
-    pensum: '2024',
+    pensum: '',
     faculty: '',
+    ciclo: '',
     dia: 'Lunes',
   });
 
+  const [students, setStudents] = useState([]);
   const [materias, setMaterias] = useState([]);
+  const [grupos, setGrupos] = useState([]);
+  const [planesEstudio, setPlanesEstudio] = useState([]);
   const [facultades, setFacultades] = useState([]);
   const [carreras, setCarreras] = useState([]);
   const [ciclos, setCiclos] = useState([]);
@@ -23,17 +48,50 @@ const Home = () => {
 
   useEffect(() => {
     setLoadingFilters(true);
-    Promise.all([facultadesApi.getAll(), carrerasApi.getAll(), ciclosApi.getAll()])
-      .then(([facs, cars, cics]) => {
+    const safe = (promise) => promise.catch(() => []);
+    Promise.all([
+      safe(facultadesApi.getAll()),
+      safe(carrerasApi.getAll()),
+      safe(ciclosApi.getAll()),
+      safe(gruposApi.getAll()),
+      safe(planesEstudioApi.getAll()),
+      safe(studentsApi.getAll()),
+    ])
+      .then(([facs, cars, cics, grps, planes, sts]) => {
         setFacultades(facs);
         setCarreras(cars);
         setCiclos(cics);
-        if (facs.length > 0) setFilters((f) => ({ ...f, faculty: String(facs[0].id) }));
-        if (cars.length > 0) setFilters((f) => ({ ...f, career: String(cars[0].id) }));
+        setGrupos(grps);
+        setPlanesEstudio(planes);
+        setStudents(sts);
+
+        setFilters((prev) => ({
+          ...prev,
+          faculty: facs.length > 0 ? String(facs[0].id) : prev.faculty,
+          career: cars.length > 0 ? String(cars[0].id) : prev.career,
+          ciclo: cics.length > 0 ? String(cics[0].id) : prev.ciclo,
+          group: grps.length > 0 ? String(grps[0].id) : prev.group,
+          pensum: planes.length > 0 ? String(planes[0].id) : prev.pensum,
+          student: sts.length > 0 ? String(sts[0].expediente) : prev.student,
+          year:
+            cics.length > 0 && cics[0].anio !== undefined && cics[0].anio !== null
+              ? String(cics[0].anio)
+              : prev.year,
+        }));
       })
       .catch(console.error)
       .finally(() => setLoadingFilters(false));
   }, []);
+
+  const yearOptions = Array.from(
+    new Set(
+      ciclos
+        .map((c) => c?.anio)
+        .filter((anio) => anio !== undefined && anio !== null && String(anio).trim() !== ''),
+    ),
+  )
+    .map((anio) => String(anio))
+    .sort((a, b) => Number(b) - Number(a));
 
   useEffect(() => {
     if (activeTab === 'materias') {
@@ -62,19 +120,33 @@ const Home = () => {
                   value={filters.group}
                   onChange={(e) => handleFilterChange('group', e.target.value)}
                 >
-                  <option>Grupo A</option>
-                  <option>Grupo B</option>
-                  <option>Grupo C</option>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : grupos.length === 0
+                    ? <option value="">Sin grupos</option>
+                    : grupos.map((g) => (
+                        <option key={g.id} value={String(g.id)}>{getCatalogLabel(g, `Grupo ${g.id}`)}</option>
+                      ))
+                  }
                 </select>
               </div>
               <div className="filter-group">
-                <label>Estudiante</label>
-                <input
-                  type="text"
-                  placeholder="Buscar estudiante"
+                <label>Código de estudiante</label>
+                <select
                   value={filters.student}
                   onChange={(e) => handleFilterChange('student', e.target.value)}
-                />
+                >
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : students.length === 0
+                    ? <option value="">Sin estudiantes</option>
+                    : students.map((s) => (
+                        <option key={s.expediente} value={String(s.expediente)}>
+                          {String(s.expediente)}
+                        </option>
+                      ))
+                  }
+                </select>
               </div>
               <div className="filter-group">
                 <label>Año de carrera</label>
@@ -82,10 +154,12 @@ const Home = () => {
                   value={filters.year}
                   onChange={(e) => handleFilterChange('year', e.target.value)}
                 >
-                  <option>1er Año</option>
-                  <option>2do Año</option>
-                  <option>3er Año</option>
-                  <option>4to Año</option>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : yearOptions.length === 0
+                    ? <option value="">Sin años</option>
+                    : yearOptions.map((anio) => <option key={anio} value={anio}>{anio}</option>)
+                  }
                 </select>
               </div>
               <div className="filter-group">
@@ -105,9 +179,14 @@ const Home = () => {
                   value={filters.pensum}
                   onChange={(e) => handleFilterChange('pensum', e.target.value)}
                 >
-                  <option>2024</option>
-                  <option>2023</option>
-                  <option>2022</option>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : planesEstudio.length === 0
+                    ? <option value="">Sin pensum</option>
+                    : planesEstudio.map((p) => (
+                        <option key={p.id} value={String(p.id)}>{getCatalogLabel(p, `Pensum ${p.id}`)}</option>
+                      ))
+                  }
                 </select>
               </div>
               <button className="filter-button" type="button">
@@ -206,15 +285,17 @@ const Home = () => {
               <div className="filter-group">
                 <label>Año</label>
                 <select value={filters.year} onChange={(e) => handleFilterChange('year', e.target.value)}>
-                  <option>1er Año</option>
-                  <option>2do Año</option>
-                  <option>3er Año</option>
-                  <option>4to Año</option>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : yearOptions.length === 0
+                    ? <option value="">Sin años</option>
+                    : yearOptions.map((anio) => <option key={anio} value={anio}>{anio}</option>)
+                  }
                 </select>
               </div>
               <div className="filter-group">
                 <label>Ciclo</label>
-                <select onChange={(e) => handleFilterChange('ciclo', e.target.value)}>
+                <select value={filters.ciclo} onChange={(e) => handleFilterChange('ciclo', e.target.value)}>
                   {loadingFilters
                     ? <option>Cargando…</option>
                     : ciclos.length === 0
