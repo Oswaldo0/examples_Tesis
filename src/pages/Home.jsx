@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Home.css';
+import { materiasApi, facultadesApi, carrerasApi, ciclosApi } from '../services/api';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('horario');
@@ -7,11 +8,42 @@ const Home = () => {
     group: 'Grupo A',
     student: '',
     year: '1er Año',
-    career: 'Ingeniería',
+    career: '',
     pensum: '2024',
-    faculty: 'Facultad de Ingeniería',
+    faculty: '',
     dia: 'Lunes',
   });
+
+  const [materias, setMaterias] = useState([]);
+  const [facultades, setFacultades] = useState([]);
+  const [carreras, setCarreras] = useState([]);
+  const [ciclos, setCiclos] = useState([]);
+  const [loadingMaterias, setLoadingMaterias] = useState(false);
+  const [loadingFilters, setLoadingFilters] = useState(false);
+
+  useEffect(() => {
+    setLoadingFilters(true);
+    Promise.all([facultadesApi.getAll(), carrerasApi.getAll(), ciclosApi.getAll()])
+      .then(([facs, cars, cics]) => {
+        setFacultades(facs);
+        setCarreras(cars);
+        setCiclos(cics);
+        if (facs.length > 0) setFilters((f) => ({ ...f, faculty: String(facs[0].id) }));
+        if (cars.length > 0) setFilters((f) => ({ ...f, career: String(cars[0].id) }));
+      })
+      .catch(console.error)
+      .finally(() => setLoadingFilters(false));
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === 'materias') {
+      setLoadingMaterias(true);
+      materiasApi.getAll()
+        .then(setMaterias)
+        .catch(console.error)
+        .finally(() => setLoadingMaterias(false));
+    }
+  }, [activeTab]);
 
   const handleFilterChange = (name, value) => {
     setFilters((prev) => ({ ...prev, [name]: value }));
@@ -58,14 +90,13 @@ const Home = () => {
               </div>
               <div className="filter-group">
                 <label>Carrera</label>
-                <select
-                  value={filters.career}
-                  onChange={(e) => handleFilterChange('career', e.target.value)}
-                >
-                  <option>Ingeniería</option>
-                  <option>Licenciatura</option>
-                  <option>Administración</option>
-                  <option>Derecho</option>
+                <select value={filters.career} onChange={(e) => handleFilterChange('career', e.target.value)}>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : carreras.length === 0
+                    ? <option value="">Sin carreras</option>
+                    : carreras.map((c) => <option key={c.id} value={String(c.id)}>{c.nombre}</option>)
+                  }
                 </select>
               </div>
               <div className="filter-group">
@@ -163,26 +194,33 @@ const Home = () => {
               <h3>Filtros</h3>
               <div className="filter-group">
                 <label>Facultad</label>
-                <select
-                  value={filters.faculty}
-                  onChange={(e) => handleFilterChange('faculty', e.target.value)}
-                >
-                  <option>Facultad de Ingeniería</option>
-                  <option>Facultad de Ciencias</option>
-                  <option>Facultad de Humanidades</option>
-                  <option>Facultad de Administración</option>
+                <select value={filters.faculty} onChange={(e) => handleFilterChange('faculty', e.target.value)}>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : facultades.length === 0
+                    ? <option value="">Sin facultades</option>
+                    : facultades.map((f) => <option key={f.id} value={String(f.id)}>{f.nombre}</option>)
+                  }
                 </select>
               </div>
               <div className="filter-group">
                 <label>Año</label>
-                <select
-                  value={filters.year}
-                  onChange={(e) => handleFilterChange('year', e.target.value)}
-                >
+                <select value={filters.year} onChange={(e) => handleFilterChange('year', e.target.value)}>
                   <option>1er Año</option>
                   <option>2do Año</option>
                   <option>3er Año</option>
                   <option>4to Año</option>
+                </select>
+              </div>
+              <div className="filter-group">
+                <label>Ciclo</label>
+                <select onChange={(e) => handleFilterChange('ciclo', e.target.value)}>
+                  {loadingFilters
+                    ? <option>Cargando…</option>
+                    : ciclos.length === 0
+                    ? <option value="">Sin ciclos</option>
+                    : ciclos.map((c) => <option key={c.id} value={String(c.id)}>{c.ciclo} - {c.anio}</option>)
+                  }
                 </select>
               </div>
               <div className="filter-group">
@@ -204,33 +242,22 @@ const Home = () => {
             </aside>
             <section className="schedule-content tab-content">
               <h3>Materias</h3>
-              <div className="subjects-list">
-                <div className="subject-card">
-                  <h4>📐 Matemática</h4>
-                  <p><strong>Catedrático:</strong> Lic. Roberto Silva</p>
-                  <p><strong>Unidades:</strong> 4</p>
+              <h3>Materias {loadingMaterias ? '(cargando…)' : `(${materias.length})`}</h3>
+              {loadingMaterias ? (
+                <p>Cargando materias…</p>
+              ) : materias.length === 0 ? (
+                <p>No hay materias registradas en la base de datos.</p>
+              ) : (
+                <div className="subjects-list">
+                  {materias.map((m) => (
+                    <div key={m.id} className="subject-card">
+                      <h4>📖 {m.nombre}</h4>
+                      <p><strong>Estado:</strong> {m.estado}</p>
+                      {m.descripcion && <p>{m.descripcion}</p>}
+                    </div>
+                  ))}
                 </div>
-                <div className="subject-card">
-                  <h4>🔬 Física</h4>
-                  <p><strong>Catedrático:</strong> Lic. Ana Morales</p>
-                  <p><strong>Unidades:</strong> 4</p>
-                </div>
-                <div className="subject-card">
-                  <h4>🧪 Química</h4>
-                  <p><strong>Catedrático:</strong> Lic. Fernando Rivas</p>
-                  <p><strong>Unidades:</strong> 3</p>
-                </div>
-                <div className="subject-card">
-                  <h4>📖 Historia</h4>
-                  <p><strong>Catedrático:</strong> Lic. Patricia García</p>
-                  <p><strong>Unidades:</strong> 3</p>
-                </div>
-                <div className="subject-card">
-                  <h4>🌐 Inglés</h4>
-                  <p><strong>Catedrático:</strong> Lic. David Thompson</p>
-                  <p><strong>Unidades:</strong> 4</p>
-                </div>
-              </div>
+              )}
             </section>
           </div>
         );
