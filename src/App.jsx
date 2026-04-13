@@ -7,6 +7,7 @@ import Professors from "./pages/Professors";
 import Reports from "./pages/Reports";
 import Requests from "./pages/Requests";
 import Maintenance from "./pages/Maintenance";
+import MaintenanceBlank from "./pages/MaintenanceBlank";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -25,6 +26,8 @@ function App() {
         return <Requests />;
       case "maintenance":
         return <Maintenance setCurrentPage={setCurrentPage} />;
+      case "maintenance-blank":
+        return <MaintenanceBlank />;
       default:
         return <Home />;
     }

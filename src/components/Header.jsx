@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import sonsonateLogo from "../assets/sonsonate-logo.svg";
+import sonsonateLogo from "../assets/uso-logo.jpg";
 import userAvatar from "../assets/user-avatar.svg";
 import "../styles/Header.css";
 
@@ -19,6 +19,11 @@ const Header = ({ setCurrentPage }) => {
     setUserMenuOpen(false);
   };
 
+  const handleUserPageClick = (page) => {
+    setCurrentPage(page);
+    setUserMenuOpen(false);
+  };
+
   return (
     <header className="header">
       <div className="brand">
@@ -27,7 +32,6 @@ const Header = ({ setCurrentPage }) => {
           alt="Logo Universidad Sonsonate"
           className="brand-logo"
         />
-        <h1>Sonsonate</h1>
       </div>
       <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         ☰
@@ -105,7 +109,17 @@ const Header = ({ setCurrentPage }) => {
             </a>
             <a href="#" className="dropdown-item">
 
-              �🔐 Cambio de contraseña
+               Cambio de contraseña
+            </a>
+            <a
+              href="#"
+              className="dropdown-item"
+              onClick={(e) => {
+                e.preventDefault();
+                handleUserPageClick("maintenance-blank");
+              }}
+            >
+              🛠️ Mantenimiento
             </a>
             <a 
               href="#" 
@@ -115,7 +129,7 @@ const Header = ({ setCurrentPage }) => {
                 handleUserMenuClick("logout");
               }}
             >
-              🚪 Salir
+               Salir
             </a>
           </div>
         )}

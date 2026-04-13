@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, onClose }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -37,6 +37,16 @@ const Login = ({ onLogin }) => {
           <button type="submit" className="login-button">
             Iniciar Sesión
           </button>
+          {onClose && (
+            <button 
+              type="button" 
+              className="login-button cancel-button" 
+              onClick={onClose} 
+              style={{ marginLeft: '10px', backgroundColor: '#64748b' }}
+            >
+              Cancelar
+            </button>
+          )}
         </form>
       </div>
     </div>

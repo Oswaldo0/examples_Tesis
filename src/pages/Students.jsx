@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import '../styles/Students.css';
+import Login from '../components/Login';
+import userAvatar from '../assets/user-avatar.svg';
 
 const Students = ({ setCurrentPage }) => {
   const [activeTab, setActiveTab] = useState('curso');
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    setCurrentPage('maintenance');
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -68,7 +76,7 @@ const Students = ({ setCurrentPage }) => {
         </button>
         <button
           className="tab-button"
-          onClick={() => setCurrentPage('maintenance')}
+          onClick={() => setShowLoginModal(true)}
         >
           🔧 Mantenimiento
         </button>
@@ -77,7 +85,7 @@ const Students = ({ setCurrentPage }) => {
         <aside className="profile-panel">
           <div className="profile-header">
             <div className="photo-section">
-              <img src="/user-avatar.svg" alt="Foto del estudiante" className="profile-photo" />
+              <img src={userAvatar} alt="Foto del estudiante" className="profile-photo" />
               <button className="upload-button">Subir Foto</button>
             </div>
             <h3>Juan Pérez García</h3>
@@ -92,6 +100,7 @@ const Students = ({ setCurrentPage }) => {
           {renderContent()}
         </section>
       </div>
+      {showLoginModal && <Login onLogin={handleLoginSuccess} onClose={() => setShowLoginModal(false)} />}
     </div>
   );
 };

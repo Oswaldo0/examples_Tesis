@@ -20,8 +20,8 @@
 }
 
 .brand-logo {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
 }
 
@@ -151,6 +151,10 @@
   .header h1 {
     font-size: 1.5rem;
     flex: 1;
+  }
+  .brand-logo {
+    width: 34px;
+    height: 34px;
   }
   .hamburger {
     display: block;
