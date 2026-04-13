@@ -1,6 +1,6 @@
 .requests-container {
-  padding: 5px 20px 20px;
-  max-width: 800px;
+  padding: 12px 20px 30px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -14,6 +14,89 @@
 .requests-container h2 {
   color: #282c34;
   margin: 0;
+}
+
+.requests-layer {
+  background: #ffffff;
+  border: 1px solid #d8e0ea;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+.requests-layer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.requests-layer-header p {
+  margin: 0;
+  font-weight: 600;
+  color: #1e5a96;
+}
+
+.requests-select-all {
+  margin-bottom: 10px;
+}
+
+.requests-select-all label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #314960;
+}
+
+.requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.request-card {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid #dde6ef;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f9fbfe;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.request-card.selected {
+  border-color: #2f6fb1;
+  background: #edf5ff;
+}
+
+.request-check input {
+  margin-top: 4px;
+  width: 16px;
+  height: 16px;
+}
+
+.request-main p {
+  margin: 3px 0;
+  color: #435466;
+}
+
+.request-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.request-status {
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 700;
 }
 
 .requests-container p {
@@ -35,6 +118,13 @@
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
 }
 
+.print-button:disabled {
+  background-color: #9ca3af;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .print-button:hover {
   background-color: #45a049;
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.5);
@@ -43,6 +133,10 @@
 
 .print-button:active {
   transform: translateY(0);
+}
+
+.print-only {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -66,6 +160,15 @@
 @media print {
   .print-button {
     display: none;
+  }
+
+  .requests-layer {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
+    margin-top: 0;
   }
   
   .requests-container {

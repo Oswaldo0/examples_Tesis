@@ -3,7 +3,7 @@ export class Student {
     expediente,
     nombres,
     apellidos,
-    cum = null,
+    cum = 0,
     num_carnet = null,
     calidad = null,
     id_direccion = null,

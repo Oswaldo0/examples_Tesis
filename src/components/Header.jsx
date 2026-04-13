@@ -76,6 +76,17 @@ const Header = ({ setCurrentPage }) => {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
+                handleNavClick("users");
+              }}
+            >
+              Usuarios
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
                 handleNavClick("reports");
               }}
             >
@@ -93,14 +104,29 @@ const Header = ({ setCurrentPage }) => {
               Solicitudes
             </a>
           </li>
+          <li>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("maintenance");
+              }}
+            >
+              Mantenimiento
+            </a>
+          </li>
         </ul>
       </nav>
       <div className="user-info">
-        <button 
+        <button
           className="user-button"
           onClick={() => setUserMenuOpen(!userMenuOpen)}
         >
-          <img src={userAvatar} alt="Avatar Usuario" className="user-avatar-img" />
+          <img
+            src={userAvatar}
+            alt="Avatar Usuario"
+            className="user-avatar-img"
+          />
         </button>
         {userMenuOpen && (
           <div className="user-dropdown">
@@ -108,28 +134,27 @@ const Header = ({ setCurrentPage }) => {
               👤 Usuario
             </a>
             <a href="#" className="dropdown-item">
-
-               Cambio de contraseña
+              Cambio de contraseña
             </a>
             <a
               href="#"
               className="dropdown-item"
               onClick={(e) => {
                 e.preventDefault();
-                handleUserPageClick("maintenance-blank");
+                handleUserPageClick("users");
               }}
             >
-              🛠️ Mantenimiento
+              👥 Usuarios
             </a>
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="dropdown-item logout"
               onClick={(e) => {
                 e.preventDefault();
                 handleUserMenuClick("logout");
               }}
             >
-               Salir
+              Salir
             </a>
           </div>
         )}

@@ -26,6 +26,9 @@ export const studentsApi = {
 export const facultadesApi = {
   getAll: () => request('/facultades'),
   getOne: (id) => request(`/facultades/${id}`),
+  create: (data) => request('/facultades', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id, data) => request(`/facultades/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  remove: (id) => request(`/facultades/${id}`, { method: 'DELETE' }),
 };
 
 export const ciclosApi = {
@@ -40,9 +43,44 @@ export const carrerasApi = {
 export const materiasApi = {
   getAll: () => request('/materias'),
   getOne: (id) => request(`/materias/${id}`),
+  create: (data) => request('/materias', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id, data) => request(`/materias/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  remove: (id) => request(`/materias/${id}`, { method: 'DELETE' }),
 };
 
 export const coordinadoresApi = {
   getAll: () => request('/coordinadores'),
   getOne: (id) => request(`/coordinadores/${id}`),
+  create: (data) => request('/coordinadores', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id, data) => request(`/coordinadores/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  remove: (id) => request(`/coordinadores/${id}`, { method: 'DELETE' }),
+};
+
+export const usuariosApi = {
+  getAll: () => request('/usuarios'),
+  getOne: (id) => request(`/usuarios/${id}`),
+  create: (data) => request('/usuarios', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id, data) => request(`/usuarios/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  remove: (id) => request(`/usuarios/${id}`, { method: 'DELETE' }),
+};
+
+// Catálogos FK del estudiante
+export const direccionesApi  = {
+  getAll: () => request('/direcciones'),
+  create: (data) => request('/direcciones', { method: 'POST', body: JSON.stringify(data) }),
+};
+
+export const responsablesApi = {
+  getAll: () => request('/responsables'),
+  create: (data) => request('/responsables', { method: 'POST', body: JSON.stringify(data) }),
+};
+
+export const gruposApi       = {
+  getAll: () => request('/grupos'),
+  create: (data) => request('/grupos', { method: 'POST', body: JSON.stringify(data) }),
+};
+
+export const planesEstudioApi = {
+  getAll: () => request('/planes-estudio'),
+  create: (data) => request('/planes-estudio', { method: 'POST', body: JSON.stringify(data) }),
 };
